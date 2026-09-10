@@ -15,7 +15,6 @@ const DEFAULT_PRODUCTS = [
     tags: ["bestseller", "new"],
     rating: 4.8,
     reviews: 24,
-    dateAdded: "2026-09-10",
     short: "Premium 6V electric ride-on motorcycle with 2.4GHz remote control, foot accelerator, and MP3 music player.",
     description:
       "The IK-001 Bike ST-011 is a thrilling 3-wheel electric ride-on motorcycle designed for kids aged 1–6 years. Featuring dual control with 2.4GHz wireless remote for parents and foot accelerator pedal for kids, this ride-on includes LED lighting in full body and wheel, powerful MP3 music player (Bluetooth, USB & AUX), and a comfortable large seat. Powered by a 6V 4.5Ah rechargeable battery with 6-month warranty and charger included.",
@@ -42,7 +41,6 @@ const DEFAULT_PRODUCTS = [
     tags: ["bestseller"],
     rating: 4.9,
     reviews: 31,
-    dateAdded: "2026-09-10",
     short: "Iconic Harley-style 3-wheel electric ride-on with foot accelerator, 6V battery, and MP3 music player.",
     description:
       "The IK-002 Harley Bike ST-022R brings classic Harley styling to kids' ride-ons. This 3-wheel electric motorcycle is powered by a Big motor and 6V 4.5Ah battery with 6-month warranty. Features foot accelerator pedal for control, MP3 music player with Bluetooth, USB & AUX connectivity, comfortable large seat, and designed for kids aged 1–6 years. Perfect for little riders who love the open road!",
@@ -70,7 +68,6 @@ const DEFAULT_PRODUCTS = [
     tags: ["premium", "new"],
     rating: 4.9,
     reviews: 18,
-    dateAdded: "2026-09-10",
     short: "Premium RR1000 sports bike replica with LED lights, music system, speedometer, and 12V battery.",
     description:
       "The IK-003 RR1000 Bike ST-4700RR1000 is a high-performance sports bike ride-on for kids aged 2–8 years. This premium model features LED lighting, integrated music system, hand accelerator and brake system, powerful DULL 390cc motor powered by 12V battery, and an impressive speedometer display. Available in multiple colors with dual-seating options and advanced safety features.",
@@ -98,7 +95,6 @@ const DEFAULT_PRODUCTS = [
     tags: ["bestseller", "new"],
     rating: 4.8,
     reviews: 22,
-    dateAdded: "2026-09-10",
     short: "Rugged 12V electric ride-on Jeep with parent remote control, foot accelerator, LED lights, and music system.",
     description:
       "The IK-004 Ride On ST 80G Jeep is an adventurous 12V powered ride-on vehicle designed for kids aged 2–8 years. This rugged jeep features 2-4 wheel drive option, foot accelerator pedal with parental 2.4GHz remote control, integrated mobile app support, powerful LED lights, and MP3 music player with Bluetooth, USB & AUX. Available in 5 vibrant colors with comfortable large seating and impressive all-wheel drive capability.",
@@ -131,10 +127,9 @@ function sanitizeProduct(p) {
   const short = String(p.short || p.description || name).trim();
   const description = String(p.description || short).trim();
   const specs = Array.isArray(p.specs) && p.specs.length ? p.specs.map(s => String(s).trim()).filter(Boolean) : ["Ages 3–8 years", "Battery-powered ride-on", "Safety certified"];
-  const dateAdded = p.dateAdded || new Date().toISOString().split("T")[0];
   const id = String(p.id || ("ik-" + name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + "-" + Math.floor(100 + Math.random() * 900)));
 
-  return { id, name, category, price, image, colors: colors.length ? colors : ["Red", "Black"], tags, rating, reviews, dateAdded, short, description, specs: specs.length ? specs : ["Ages 3–8 years", "Battery-powered ride-on", "Safety certified"] };
+  return { id, name, category, price, image, colors: colors.length ? colors : ["Red", "Black"], tags, rating, reviews, short, description, specs: specs.length ? specs : ["Ages 3–8 years", "Battery-powered ride-on", "Safety certified"] };
 }
 
 function getProducts() {
