@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IndoKidz - Premium Ride-on Toys for Kids</title>
+<meta name="description" content="Shop premium ride-on toy vehicles at IndoKidz. Electric motorcycles, cars, and jeeps for kids." />
+<link rel="icon" href="assets/logo.jpeg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.jpeg" alt="IndoKidz logo" style="width:40px;height:40px;" />
+      <span>
+        <span class="brand-name">IndoKidz</span>
+        <span class="brand-tag">Ride-ons · Bicycles · Tricycles</span>
+      </span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="shop.html?cat=motorcycles">Motorcycles</a></li>
+      <li><a href="shop.html?cat=cars">Luxury Cars</a></li>
+      <li><a href="shop.html?cat=jeeps">Jeeps &amp; Buggies</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+    <div class="nav-actions">
+      <div class="nav-search">
+        <span>🔍</span>
+        <input type="text" placeholder="Search toy cars…" data-header />
+      </div>
+      <a href="cart.html" class="icon-btn" aria-label="View cart">🛒<span class="cart-count">0</span></a>
+      <button class="nav-burger" aria-label="Toggle menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" style="padding:80px 20px; text-align:center; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+  <div class="wrap">
+    <h1 style="font-size:3em; color:white; margin-bottom:20px;">Premium Ride-on Toys for Kids</h1>
+    <p style="font-size:1.2em; color:rgba(255,255,255,0.9); margin-bottom:30px;">Safe, Fun, and Built to Last - Designed for Little Legends</p>
+    <a href="shop.html" class="btn btn-primary" style="font-size:1.1em;">Start Shopping</a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Featured Collection</span>
+        <h2>Best Sellers</h2>
+      </div>
+    </div>
+    <div class="grid-4" id="featured-grid"></div>
+  </div>
+</section>
+
+<section class="section" style="background:#f8f9fa;">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 style="text-align:center;">Why Choose IndoKidz?</h2>
+    </div>
+    <div class="grid-3">
+      <div style="text-align:center; padding:30px;">
+        <div style="font-size:3em; margin-bottom:15px;">🚀</div>
+        <h3>High Quality</h3>
+        <p>Built with premium materials and safety standards</p>
+      </div>
+      <div style="text-align:center; padding:30px;">
+        <div style="font-size:3em; margin-bottom:15px;">🛡️</div>
+        <h3>Safety First</h3>
+        <p>All products certified and tested for maximum safety</p>
+      </div>
+      <div style="text-align:center; padding:30px;">
+        <div style="font-size:3em; margin-bottom:15px;">⚡</div>
+        <h3>Powerful Battery</h3>
+        <p>Long-lasting rechargeable batteries with warranty</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="assets/logo.jpeg" alt="IndoKidz" style="width:40px;height:40px;" />
+          <span>IndoKidz</span>
+        </div>
+        <p class="desc">Premium ride-on toy cars, motorcycles and jeeps for kids.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/indokidzco" target="_blank">IG</a>
+          <a href="#">FB</a>
+          <a href="#">YT</a>
+        </div>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop.html?cat=motorcycles">Motorcycles</a></li>
+          <li><a href="shop.html?cat=cars">Luxury Cars</a></li>
+          <li><a href="shop.html?cat=jeeps">Jeeps &amp; Buggies</a></li>
+          <li><a href="shop.html">All Products</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Warranty</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Safety</a></li>
+          <li><a href="#">Locations</a></li>
+          <li><a href="admin.html">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span class="year"></span> IndoKidz. All rights reserved.</span>
+      <span>Made for little legends, everywhere in India.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/site.js"></script>
+<script>
+  document.getElementById('featured-grid').innerHTML = getProducts().slice(0, 4).map(productCardHTML).join('');
+</script>
+</body>
+</html>

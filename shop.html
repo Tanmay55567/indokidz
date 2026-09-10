@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shop - IndoKidz</title>
+<meta name="description" content="Browse all premium ride-on toys at IndoKidz" />
+<link rel="icon" href="assets/logo.jpeg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.jpeg" alt="IndoKidz logo" style="width:40px;height:40px;" />
+      <span>
+        <span class="brand-name">IndoKidz</span>
+        <span class="brand-tag">Ride-ons · Bicycles · Tricycles</span>
+      </span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="shop.html?cat=motorcycles">Motorcycles</a></li>
+      <li><a href="shop.html?cat=cars">Luxury Cars</a></li>
+      <li><a href="shop.html?cat=jeeps">Jeeps &amp; Buggies</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+    <div class="nav-actions">
+      <div class="nav-search">
+        <span>🔍</span>
+        <input type="text" placeholder="Search toy cars…" data-header />
+      </div>
+      <a href="cart.html" class="icon-btn" aria-label="View cart">🛒<span class="cart-count">0</span></a>
+      <button class="nav-burger" aria-label="Toggle menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <h1 id="page-title">Shop All Rides</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="shop-layout">
+      <aside class="shop-filters">
+        <h3>Category</h3>
+        <div>
+          <label><input type="radio" name="cat" value="" checked /> All Products</label>
+          <label><input type="radio" name="cat" value="motorcycles" /> Motorcycles</label>
+          <label><input type="radio" name="cat" value="cars" /> Luxury Cars</label>
+          <label><input type="radio" name="cat" value="jeeps" /> Jeeps & Buggies</label>
+        </div>
+      </aside>
+      <div class="shop-grid" id="products-grid"></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="assets/logo.jpeg" alt="IndoKidz" style="width:40px;height:40px;" />
+          <span>IndoKidz</span>
+        </div>
+        <p class="desc">Premium ride-on toy cars, motorcycles and jeeps for kids.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop.html?cat=motorcycles">Motorcycles</a></li>
+          <li><a href="shop.html?cat=cars">Luxury Cars</a></li>
+          <li><a href="shop.html?cat=jeeps">Jeeps &amp; Buggies</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Shipping</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Warranty</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Safety</a></li>
+          <li><a href="admin.html">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span class="year"></span> IndoKidz. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/site.js"></script>
+<script>
+  function renderShop() {
+    const cat = new URLSearchParams(window.location.search).get('cat');
+    let products = getProducts();
+    if (cat) {
+      document.getElementById('page-title').textContent = (CATEGORY_LABELS[cat] || 'Shop');
+      products = products.filter(p => p.category === cat);
+    }
+    document.getElementById('products-grid').innerHTML = products.map(productCardHTML).join('');
+  }
+  document.querySelectorAll('input[name="cat"]').forEach(r => {
+    r.addEventListener('change', () => {
+      window.location.href = r.value ? `?cat=${r.value}` : 'shop.html';
+    });
+  });
+  renderShop();
+</script>
+</body>
+</html>

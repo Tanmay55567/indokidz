@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin Panel - IndoKidz</title>
+<link rel="icon" href="assets/logo.jpeg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+<style>
+  .admin-container { max-width: 1000px; margin: 0 auto; padding: 30px 20px; }
+  .admin-form { background: var(--light); padding: 30px; border-radius: 10px; margin-bottom: 30px; }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 5px; font-family: inherit; }
+  .admin-products { display: grid; gap: 15px; }
+  .admin-product { background: #fff; padding: 15px; border: 1px solid var(--border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+  .admin-product-info { flex: 1; }
+  .admin-product-actions { display: flex; gap: 10px; }
+  .admin-product-actions button { padding: 8px 15px; font-size: 0.9em; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.jpeg" alt="IndoKidz" style="width:40px;height:40px;" />
+      <span><span class="brand-name">IndoKidz Admin</span></span>
+    </a>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-outline" style="padding:8px 15px; font-size:0.9em;">← Back to Shop</a>
+    </div>
+  </nav>
+</header>
+
+<section class="admin-container">
+  <h1 style="margin-bottom:30px;">Admin Panel</h1>
+  
+  <div class="admin-form">
+    <h2 style="margin-bottom:20px;">Add New Product</h2>
+    <form id="add-product-form">
+      <div class="form-group">
+        <label>Product ID</label>
+        <input type="text" id="prod-id" placeholder="ik-005" />
+      </div>
+      <div class="form-group">
+        <label>Product Name</label>
+        <input type="text" id="prod-name" placeholder="Product Name" required />
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select id="prod-cat" required>
+          <option value="motorcycles">Motorcycles</option>
+          <option value="cars">Luxury Cars</option>
+          <option value="jeeps">Jeeps & Buggies</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Price (₹)</label>
+        <input type="number" id="prod-price" placeholder="11000" required />
+      </div>
+      <div class="form-group">
+        <label>Image URL</label>
+        <input type="text" id="prod-image" placeholder="assets/products/ik-005.jpeg" />
+      </div>
+      <div class="form-group">
+        <label>Colors (comma-separated)</label>
+        <input type="text" id="prod-colors" placeholder="Red, Blue, White" />
+      </div>
+      <div class="form-group">
+        <label>Short Description</label>
+        <input type="text" id="prod-short" placeholder="Premium electric ride-on..." />
+      </div>
+      <div class="form-group">
+        <label>Full Description</label>
+        <textarea id="prod-desc" rows="4" placeholder="Detailed description..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Rating (1-5)</label>
+        <input type="number" id="prod-rating" min="1" max="5" step="0.1" placeholder="4.8" />
+      </div>
+      <div class="form-group">
+        <label>Reviews Count</label>
+        <input type="number" id="prod-reviews" placeholder="24" />
+      </div>
+      <button type="submit" class="btn btn-primary">Add Product</button>
+      <button type="button" class="btn btn-outline" onclick="resetProductsToDefault(); location.reload();" style="margin-left:10px;">Reset to Default Products</button>
+    </form>
+  </div>
+  
+  <h2 style="margin-bottom:20px;">All Products</h2>
+  <div class="admin-products" id="admin-products-list"></div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="text-align:center;">
+      <span>© <span class="year"></span> IndoKidz Admin Panel</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/site.js"></script>
+<script>
+  function renderAdminProducts() {
+    const products = getProducts();
+    document.getElementById('admin-products-list').innerHTML = products.map(p => `
+      <div class="admin-product">
+        <div class="admin-product-info">
+          <h3>${p.name}</h3>
+          <p><strong>${CATEGORY_LABELS[p.category]}</strong> - ${formatINR(p.price)} - ${p.colors.join(', ')}</p>
+        </div>
+        <div class="admin-product-actions">
+          <button class="btn btn-outline" onclick="deleteProduct('${p.id}'); renderAdminProducts();" style="padding:8px 12px; font-size:0.85em; color:red; border-color:red;">Delete</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  
+  document.getElementById('add-product-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const newProduct = {
+      id: document.getElementById('prod-id').value,
+      name: document.getElementById('prod-name').value,
+      category: document.getElementById('prod-cat').value,
+      price: parseInt(document.getElementById('prod-price').value),
+      image: document.getElementById('prod-image').value || 'assets/logo.jpeg',
+      colors: document.getElementById('prod-colors').value.split(',').map(c => c.trim()),
+      short: document.getElementById('prod-short').value,
+      description: document.getElementById('prod-desc').value,
+      rating: parseFloat(document.getElementById('prod-rating').value) || 5,
+      reviews: parseInt(document.getElementById('prod-reviews').value) || 0,
+      tags: ['new']
+    };
+    
+    const result = addProduct(newProduct);
+    if (result.success) {
+      alert('Product added successfully!');
+      e.target.reset();
+      renderAdminProducts();
+    } else {
+      alert('Error: ' + result.error);
+    }
+  });
+  
+  renderAdminProducts();
+</script>
+</body>
+</html>
