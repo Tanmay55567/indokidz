@@ -165,7 +165,7 @@
         <p class="pd-desc">${product.description || product.short || ''}</p>
 
         <div class="pd-block">
-          <h4>Colour �� <span id="active-color">${activeColor}</span></h4>
+          <h4>Colour — <span id="active-color">${activeColor}</span></h4>
           <div class="swatches" id="swatch-row">
             ${colors.map(c => `<button type="button" class="swatch ${c===activeColor?'active':''}" data-color="${c.replace(/"/g, '&quot;')}">${c}</button>`).join("")}
           </div>
