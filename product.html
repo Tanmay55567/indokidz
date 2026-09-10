@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title id="page-title">Product — IndoKidz</title>
+<meta name="description" id="page-desc" content="Shop premium ride-on toy vehicles at IndoKidz." />
+<link rel="icon" href="assets/logo.jpeg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.jpeg" alt="IndoKidz logo" />
+      <span>
+        <span class="brand-name">IndoKidz</span>
+        <span class="brand-tag">Ride-ons · Bicycles · Tricycles</span>
+      </span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="shop.html?cat=motorcycles">Motorcycles</a></li>
+      <li><a href="shop.html?cat=cars">Luxury Cars</a></li>
+      <li><a href="shop.html?cat=jeeps">Jeeps &amp; Buggies</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+    <div class="nav-actions">
+      <div class="nav-search">
+        <span>🔍</span>
+        <input type="text" placeholder="Search toy cars…" data-header />
+      </div>
+      <a href="cart.html" class="icon-btn" aria-label="View cart">🛒<span class="cart-count">0</span></a>
+      <button class="nav-burger" aria-label="Toggle menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<section class="page-head" style="padding:26px 0;">
+  <div class="wrap">
+    <div class="breadcrumb" id="breadcrumb"><a href="index.html">Home</a> / <a href="shop.html">Shop</a> / <span id="crumb-name"></span></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:20px;">
+  <div class="wrap pd-layout" id="pd-root"></div>
+</section>
+
+<section class="section section-tight" style="background:#fff;">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">You might also like</span>
+        <h2>Related rides</h2>
+      </div>
+    </div>
+    <div class="related-scroll" id="related-grid"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="assets/logo.jpeg" alt="IndoKidz logo" />
+          <span>IndoKidz</span>
+        </div>
+        <p class="desc">Premium ride-on toy cars, motorcycles and jeeps for kids — designed to look real, built to be safe.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/indokidzco?igsi=ZzB4b3MzazVveDJt" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="YouTube">YT</a>
+        </div>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop.html?cat=motorcycles">Motorcycles</a></li>
+          <li><a href="shop.html?cat=cars">Luxury Cars</a></li>
+          <li><a href="shop.html?cat=jeeps">Jeeps &amp; Buggies</a></li>
+          <li><a href="shop.html">All Products</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">Returns &amp; Refunds</a></li>
+          <li><a href="#">Warranty</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+          <ul>
+            <li><a href="#">About IndoKidz</a></li>
+            <li><a href="#">Safety Standards</a></li>
+            <li><a href="#">Store Locator</a></li>
+            <li><a href="admin.html">Admin Portal</a></li>
+          </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span class="year"></span> IndoKidz. All rights reserved.</span>
+      <span>Made for little legends, everywhere in India.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/site.js"></script>
+<script>
+  function loadAndRenderProduct() {
+    const allProds = getProducts();
+    const id = new URLSearchParams(window.location.search).get("id");
+    let product = id ? getProductById(id) : null;
+    if (!product && allProds.length) {
+      if (!id) product = allProds[0];
+    }
+
+    const rootEl = document.getElementById("pd-root");
+
+    if (!product) {
+      document.getElementById("page-title").textContent = "Ride Not Found — IndoKidz";
+      document.getElementById("crumb-name").textContent = "Not Found";
+      rootEl.innerHTML = `<div style="grid-column: 1 / -1; text-align:center; padding:60px 20px;"><h2>Ride Not Found</h2><p style="color:var(--ink-soft); margin:12px 0 24px;">The ride model you are looking for may have been removed or updated.</p><a href="shop.html" class="btn btn-rainbow">Back to Shop</a></div>`;
+      document.getElementById("related-grid").innerHTML = allProds.slice(0, 4).map(productCardHTML).join("");
+      return;
+    }
+
+    const colors = Array.isArray(product.colors) && product.colors.length ? product.colors : ["Standard"];
+    const specs = Array.isArray(product.specs) && product.specs.length ? product.specs : ["Ages 3–8 years", "Battery-powered ride-on", "Safety certified"];
+    let qty = 1;
+    let activeColor = colors[0];
+
+    document.getElementById("page-title").textContent = product.name + " — IndoKidz";
+    const descMeta = document.getElementById("page-desc");
+    if (descMeta) descMeta.setAttribute("content", product.short || product.name);
+    document.getElementById("crumb-name").textContent = product.name;
+
+    const catLabel = CATEGORY_LABELS[product.category] || product.category || "Ride-on";
+
+    rootEl.innerHTML = `
+      <div class="pd-gallery">
+        <div class="pd-zoom-frame" id="zoom-frame">
+          <img src="${product.image || 'assets/logo.jpeg'}" alt="${product.name.replace(/"/g, '&quot;')}" id="zoom-img" onerror="this.src='assets/logo.jpeg'" />
+          <span class="pd-zoom-hint">Click to zoom</span>
+        </div>
+      </div>
+      <div class="pd-info">
+        <span class="eyebrow">${catLabel}</span>
+        <h1 class="pd-title">${product.name}</h1>
+        <div class="pd-rating"><span class="stars">${starString(product.rating || 5)}</span><span>${product.rating || 5.0} · ${product.reviews || 0} reviews</span></div>
+        <div class="pd-price-row">
+          <span class="price pd-price">${formatINR(product.price)}</span>
+          <span class="pd-price-note">Inclusive of all taxes</span>
+        </div>
+        <p class="pd-desc">${product.description || product.short || ''}</p>
+
+        <div class="pd-block">
+          <h4>Colour �� <span id="active-color">${activeColor}</span></h4>
+          <div class="swatches" id="swatch-row">
+            ${colors.map(c => `<button type="button" class="swatch ${c===activeColor?'active':''}" data-color="${c.replace(/"/g, '&quot;')}">${c}</button>`).join("")}
+          </div>
+        </div>
+
+        <div class="pd-block">
+          <h4>Quantity</h4>
+          <div class="qty-row">
+            <div class="qty-control">
+              <button type="button" id="qty-minus" aria-label="Decrease quantity">−</button>
+              <span id="qty-value">1</span>
+              <button type="button" id="qty-plus" aria-label="Increase quantity">+</button>
+            </div>
+            <span class="stock-note"><span class="dot"></span> In stock, ships in 24 hours</span>
+          </div>
+        </div>
+
+        <div class="pd-actions">
+          <button class="btn btn-outline btn-block" id="add-cart-btn">Add to Cart</button>
+          <button class="btn btn-primary btn-block" id="buy-now-btn">Buy Now</button>
+        </div>
+
+        <div class="pd-block">
+          <h4>Specifications</h4>
+          <ul class="pd-specs">
+            ${specs.map(s => `<li>${s}</li>`).join("")}
+          </ul>
+        </div>
+
+        <div class="pd-trust">
+          <div>🚚 Free shipping over ₹12,000</div>
+          <div>🔁 7-day easy returns</div>
+          <div>🛡️ 2-year part support</div>
+        </div>
+      </div>
+    `;
+
+    const zoomFrame = document.getElementById("zoom-frame");
+    const zoomImg = document.getElementById("zoom-img");
+
+    if (zoomFrame && zoomImg) {
+      zoomFrame.addEventListener("click", () => {
+        if (!zoomFrame.classList.contains("zoomed")) {
+          zoomFrame.classList.add("zoomed");
+        } else {
+          zoomFrame.classList.remove("zoomed");
+          zoomImg.style.transform = "";
+        }
+      });
+      zoomFrame.addEventListener("mousemove", (e) => {
+        if (!zoomFrame.classList.contains("zoomed")) return;
+        const rect = zoomFrame.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        zoomImg.style.transformOrigin = `${x}% ${y}%`;
+      });
+    }
+
+    document.querySelectorAll(".swatch").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeColor = btn.dataset.color;
+        document.querySelectorAll(".swatch").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById("active-color").textContent = activeColor;
+        if (zoomImg && COLOR_FILTERS[activeColor]) {
+          zoomImg.style.filter = COLOR_FILTERS[activeColor];
+        } else {
+          zoomImg.style.filter = "none";
+        }
+      });
+    });
+
+    const qtyValEl = document.getElementById("qty-value");
+    document.getElementById("qty-minus").addEventListener("click", () => {
+      qty = Math.max(1, qty - 1);
+      qtyValEl.textContent = qty;
+    });
+    document.getElementById("qty-plus").addEventListener("click", () => {
+      qty = Math.min(10, qty + 1);
+      qtyValEl.textContent = qty;
+    });
+    document.getElementById("add-cart-btn").addEventListener("click", () => {
+      addToCart(product.id, qty, activeColor);
+    });
+    document.getElementById("buy-now-btn").addEventListener("click", () => {
+      addToCart(product.id, qty, activeColor);
+      window.location.href = "cart.html?checkout=1";
+    });
+
+    const related = allProds.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
+    const fallback = related.length ? related : allProds.filter(p => p.id !== product.id).slice(0, 4);
+    const relGrid = document.getElementById("related-grid");
+    const relSection = relGrid ? relGrid.closest(".section") : null;
+    if (fallback.length === 0) {
+      if (relSection) relSection.style.display = "none";
+    } else {
+      if (relSection) relSection.style.display = "";
+      relGrid.innerHTML = fallback.map(productCardHTML).join("");
+    }
+  }
+
+  window.addEventListener("storage", (e) => {
+    if (e.key === PRODUCTS_KEY) {
+      refreshProductsArray();
+      loadAndRenderProduct();
+    }
+  });
+
+  loadAndRenderProduct();
+</script>
+</body>
+</html>
